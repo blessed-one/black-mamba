@@ -45,7 +45,7 @@ namespace stack_minimumov
                 Array.Resize(ref _minimums, Count * 2);
             }
             _items[Count] = item;
-            _minimums[Count] = (Count == 0 || item.CompareTo(_minimums[Count - 1]) < 0)
+            _minimums[Count] = (IsEmpty || item.CompareTo(_minimums[Count - 1]) < 0)
                 ? item
                 : _minimums[Count - 1];
 
@@ -54,7 +54,7 @@ namespace stack_minimumov
 
         public T Peek()
         {
-            if (Count == 0)
+            if (IsEmpty)
             {
                 throw new InvalidOperationException("Stack is empty");
             }
@@ -63,7 +63,7 @@ namespace stack_minimumov
         }
         public bool TryPeek(out T result)
         {
-            if (Count == 0)
+            if (IsEmpty)
             {
                 result = default;
                 return false;
@@ -75,7 +75,7 @@ namespace stack_minimumov
 
         public T Pop()
         {
-            if (Count == 0)
+            if (IsEmpty)
             {
                 throw new InvalidOperationException("Stack is empty");
             }
@@ -88,7 +88,7 @@ namespace stack_minimumov
         }
         public bool TryPop(out T result)
         {
-            if (Count == 0)
+            if (IsEmpty)
             {
                 result = default;
                 return false;
@@ -124,6 +124,10 @@ namespace stack_minimumov
 
         public T Min()
         {
+            if (IsEmpty)
+            {
+                throw new InvalidOperationException("Stack is empty");
+            }
             return _minimums[Count - 1];
         }
 
