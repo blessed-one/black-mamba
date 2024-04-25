@@ -5,9 +5,15 @@ namespace ochered_minimumov;
 
 public class OcheredMinimumov<T>:IEnumerable<T> where T : IComparable<T>
 {
-    private StackMinimumov<T> _inStack;
-    private StackMinimumov<T> _outStack;
-
+    private StackMinimumov<T> _inStack = new StackMinimumov<T>();
+    private StackMinimumov<T> _outStack = new StackMinimumov<T>();
+    public int Count
+    {
+        get
+        {
+            return _inStack.Count + _outStack.Count;
+        }
+    }
     public void Push(T data)
     {
         _inStack.Push(data);
