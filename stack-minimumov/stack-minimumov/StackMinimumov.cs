@@ -131,6 +131,11 @@ namespace stack_minimumov
             return _minimums[Count - 1];
         }
 
+        public T GetFirst()
+        {
+            return _items[0];
+        }
+
         public IEnumerator<T> GetEnumerator()
         {
             for (int i = Count - 1; i >= 0; i--)
