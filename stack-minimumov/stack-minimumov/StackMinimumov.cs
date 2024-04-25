@@ -45,7 +45,7 @@ namespace stack_minimumov
                 Array.Resize(ref _minimums, Count * 2);
             }
             _items[Count] = item;
-            _minimums[Count] = (item.CompareTo(_minimums[Count - 1]) < 0)
+            _minimums[Count] = (Count == 0 || item.CompareTo(_minimums[Count - 1]) < 0)
                 ? item
                 : _minimums[Count - 1];
 
