@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Data;
 
-namespace Task6Alg;
+namespace ochered_minimumov;
 
 public class CustomHashSet<T>: IEnumerable<T>
 {
