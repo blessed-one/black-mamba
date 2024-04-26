@@ -1,20 +1,41 @@
 ﻿using stack_minimumov;
+using System.Diagnostics;
+using System.Numerics;
+using System.Text;
 
-public static class Program
+
+var stopwatch = new Stopwatch();
+var rnd = new Random();
+string pathMin = @"D:\inf\black-mamba\stack-minimumov\stack-minimumov\testMin.txt";
+string pathDefault = @"D:\inf\black-mamba\stack-minimumov\stack-minimumov\testDefault.txt";
+
+
+for (int n = 1000000; n <= 5000000; n += 100000)
 {
-    public static void Main(string[] args)
-    {
-        var cifri = new int[] { 9, 8, 6, 8, 4, 1, 5, -2, 45, -1111 };
-        var stackk = new StackMinimumov<int>();
-        string stackLine = "";
-        string minLine = "";
-        foreach (int i in cifri)
-        {
-            stackk.Push(i);
-            stackLine += $"{i} ";
-            minLine += $"{stackk.Min()} ";
+    //var queue = new OcheredMinimumov<int>();
+    var stackMins = new StackMinimumov<int>();
+    var stackDefault = new Stack<int>();
 
-            Console.WriteLine($"Введено число - {i}\nstack: {stackLine}\nminns: {minLine}\n");
-        }
+    for (int i = 0; i <= n; i++)
+    {
+        int x = rnd.Next(1, 100000);
+        stackMins.Push(x);
+        stackDefault.Push(x);
     }
+
+    // Замер обычного стека
+    stopwatch.Start();
+    stackDefault.Min();
+    stopwatch.Stop();
+
+    File.AppendAllText(pathDefault, $"\n{n} {stopwatch.ElapsedTicks}", Encoding.GetEncoding("iso-8859-1"));
+    stopwatch.Reset();
+
+    // Замер стека минимумов
+    stopwatch.Start();
+    stackMins.Min();
+    stopwatch.Stop();
+
+    File.AppendAllText(pathMin, $"\n{n} {stopwatch.ElapsedTicks}", Encoding.GetEncoding("iso-8859-1"));
+    stopwatch.Reset();
 }
