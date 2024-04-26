@@ -3,12 +3,25 @@ using System.Data;
 
 namespace ochered_minimumov;
 
-public class CustomHashSet<T>: IEnumerable<T>
+public class CustomHashSet<T>: IEnumerable<T> where T : IComparable<T>
 {
     private const int _startSize = 5;
     private LinkedList<T>[] _hashset = new LinkedList<T>[_startSize];
     public int Count { get; set; }
+    private T _minimum;
 
+    public T Minimum
+    {
+        get
+        {
+            return _minimum;
+        }
+    }
+
+    private T GetMinimum(T firstVal, T secondVal)
+    {
+        return firstVal.CompareTo(secondVal) > 0 ? secondVal : firstVal;
+    }
     public bool Contains(T item)
     {
         return _hashset[item.GetHashCode() % _hashset.Length].Contains(item);
@@ -25,7 +38,7 @@ public class CustomHashSet<T>: IEnumerable<T>
                 {
                     foreach (var oldItem in _hashset[i])
                     {
-                        newHashset[oldItem.GetHashCode() % _hashset.Length * 2].AddLast(oldItem);
+                        newHashset[oldItem.GetHashCode() % (_hashset.Length * 2)].AddLast(oldItem);
                     }
                 }
                 _hashset = newHashset;

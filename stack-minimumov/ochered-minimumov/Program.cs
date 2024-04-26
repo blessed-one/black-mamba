@@ -1,28 +1,27 @@
 ﻿using ochered_minimumov;
 using stack_minimumov;
+using System.Diagnostics;
+using System.Numerics;
+using System.Text;
 
-var cifri = new int[] { 9, 8, 6, 8, -4, 1, 5, -2, 45, 1111 };
-var queue = new OcheredMinimumov<int>();
-string stackLine = "";
-string minLine = "";
-foreach (int i in cifri)
-{
-    queue.Push(i);
-    stackLine += $"{i} ";
-    minLine += $"{queue.GetMinimum()} ";
 
-    Console.WriteLine($"Введено число - {i}\nqueue: {stackLine}\nminns: {minLine}\n");
-}
+var stopwatch = new Stopwatch();
+var rnd = new Random();
+for (int n = 1000000; n < 5000000; n += 100000)
+{
+    //var queue = new OcheredMinimumov<int>();
+    var queue = new Queue<int>();
 
-foreach (var i in queue)
-{
-    Console.WriteLine(i);
-}
-queue.Pop();
-queue.Push(14);
-queue.Push(88);
-Console.WriteLine();
-foreach (var i in queue)
-{
-    Console.WriteLine(i);
+    for (int i = 0; i <= n; i++)
+    {
+        queue.Enqueue(rnd.Next(1, 100000));
+    }
+
+    stopwatch.Start();
+    queue.Min();
+    stopwatch.Stop();
+    string path = @"D:\ControlWork1\Hackathon\black-mamba\stack-minimumov\ochered-minimumov\queGetMinimum.txt";
+
+    File.AppendAllText(path, $"\n{n} {stopwatch.ElapsedTicks}", Encoding.GetEncoding("iso-8859-1"));
+    stopwatch.Reset();
 }
