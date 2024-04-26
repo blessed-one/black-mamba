@@ -70,14 +70,18 @@ public class OcheredMinimumov<T>:IEnumerable<T> where T : IComparable<T>
 
     public IEnumerator<T> GetEnumerator()
     {
-        foreach(var item in _inStack)
+        foreach (var item in _outStack)
         {
             yield return item;
         }
-
-        while (!_outStack.IsEmpty)
+        var tempStack = new Stack<T>();
+        foreach (var item in _inStack)
         {
-            yield return _outStack.Pop();
+            tempStack.Push(item);
+        }
+        foreach (var item in tempStack)
+        {
+            yield return item;
         }
     }
 
